@@ -1,38 +1,30 @@
 function calcCartPriceAndDelivery() {
-  const cartItems = document.querySelectorAll('.cart-item');
-  const totalPriceEl = document.querySelector('.total-price');
-  const deliveryCost = document.querySelector('.delivery-cost');
-  const cartDelivery = document.querySelector('[data-cart-delivery]');
-  const deliveryFree = document.querySelector('.delivery-free');
+  const cartBody = document.querySelector('#cart-body');
+  const cartItems = cartBody.querySelectorAll('.cart-item');
+  const totalPriceEl = cartBody.querySelector('.total-price');
+  const deliveryCost = cartBody.querySelector('.delivery-cost');
+  const cartDelivery = cartBody.querySelector('[data-cart-delivery]');
+  const deliveryFree = cartBody.querySelector('.delivery-free');
 
-  let totalPrice = 0;
+  const totalPrice = [...cartItems].reduce(
+    (acc, curr) => acc + +curr.querySelector('.price__currency').textContent,
+    0
+  );
 
-  cartItems.forEach(function (item) {
-    const amountEl = item.querySelector('[data-counter]');
-    const priceEl = item.querySelector('.price__currency');
-    const currentPrice = parseInt(amountEl.innerText) * parseInt(priceEl.innerText);
-    totalPrice += currentPrice;
-  });
+  totalPriceEl.textContent = totalPrice;
 
-  totalPriceEl.innerText = totalPrice;
-
-  if (totalPrice > 0) {
+  if (totalPrice) {
     cartDelivery.classList.remove('none');
+    if (totalPrice < 600) {
+      deliveryFree.classList.remove('none');
+      deliveryCost.classList.remove('free');
+      deliveryCost.innerText = '250 ₽';
+    } else {
+      deliveryFree.classList.add('none');
+      deliveryCost.classList.add('free');
+      deliveryCost.innerText = 'бесплатно';
+    }
   } else {
     cartDelivery.classList.add('none');
-  }
-
-  if (totalPrice < 600) {
-    deliveryFree.classList.remove('none');
-  } else {
-    deliveryFree.classList.add('none');
-  }
-
-  if (totalPrice >= 600) {
-    deliveryCost.classList.add('free');
-    deliveryCost.innerText = 'бесплатно';
-  } else {
-    deliveryCost.classList.remove('free');
-    deliveryCost.innerText = '250 ₽';
   }
 }
