@@ -26,8 +26,11 @@ function addToCart(el) {
   const itemInCart = cartWrapper.querySelector(`[data-id="${prodData.id}"]`);
 
   if (itemInCart) {
-    const counterElement = itemInCart.querySelector('[data-counter]');
-    counterElement.textContent = +counterElement.textContent + itemCount;
+    const $counter = itemInCart.querySelector('[data-counter]');
+    const counter = +$counter.textContent;
+    const $price = itemInCart.querySelector('.price__currency');
+    $counter.textContent = counter + itemCount;
+    $price.textContent = (counter + itemCount) * prodData.price;
   } else {
     const cartItemHtml = `
         <div class="cart-item" data-id="${prodData.id}">

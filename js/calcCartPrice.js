@@ -6,8 +6,14 @@ function calcCartPriceAndDelivery() {
   const cartDelivery = cartBody.querySelector('[data-cart-delivery]');
   const deliveryFree = cartBody.querySelector('.delivery-free');
 
-  const totalPrice = [...cartItems].reduce(
-    (acc, curr) => acc + +curr.querySelector('.price__currency').textContent,
+  const prodItems = [...cartItems].map(item => ({
+    id: +item.dataset.id,
+    count: +item.querySelector('[data-counter]').textContent,
+  }));
+  console.log(prodItems);
+
+  const totalPrice = prodItems.reduce(
+    (acc, curr) => acc + data.find(({ id }) => id == curr.id).price * curr.count,
     0
   );
 

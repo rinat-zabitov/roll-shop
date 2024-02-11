@@ -34,7 +34,7 @@
         <div class="col-md-4">
           <!-- Корзина -->
           <div class="card mb-4">
-            <div class="card-body">
+            <div class="card-body" id="cart-body">
               <h5 class="card-title">Ваш заказ</h5>
               <div data-cart-empty class="alert alert-secondary" role="alert">Корзина пуста</div>
               <!-- cart-wrapper -->
@@ -76,6 +76,8 @@
         </div>
       </div>
     </div>
+    <script defer src="./js/data.js"></script>
+    <script defer src="./js/api.js"></script>
     <script defer src="./js/renderProducts.js"></script>
     <script defer src="./js/calcCartPrice.js"></script>
     <script defer src="./js/toogleCartStatus.js"></script>
